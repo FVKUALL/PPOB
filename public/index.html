@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Platform PPOB terpercaya untuk pembelian pulsa, paket data, token listrik, dan pembayaran tagihan.">
+  <meta name="keywords" content="ppob, pulsa, token listrik, tagihan, pembayaran online">
+  <meta name="theme-color" content="#0d6efd">
+  <meta property="og:title" content="PPOB Mobile - Pembayaran Digital">
+  <meta property="og:description" content="Mudah, cepat, dan aman untuk tablet & smartphone.">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/assets/icon-192.png">
+  <title>PPOB Mobile Site</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="/" class="logo" id="site-logo">PPOB Mobile</a>
+      <nav class="nav" id="main-nav">
+        <a href="#beranda">Beranda</a>
+        <a href="#produk">Produk</a>
+        <a href="#faq">FAQ</a>
+        <a href="#kontak">Kontak</a>
+      </nav>
+      <div class="header-actions">
+        <button id="btn-login" class="btn btn-outline">Masuk</button>
+        <button id="btn-register" class="btn btn-primary">Daftar</button>
+        <div id="user-menu" class="user-menu hidden">
+          <span id="user-name"></span>
+          <button id="btn-logout" class="btn btn-sm">Keluar</button>
+        </div>
+      </div>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Menu">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section id="beranda" class="hero">
+      <div class="container">
+        <h1 id="hero-title">Pembayaran Digital Mudah & Aman</h1>
+        <p id="hero-subtitle">Pulsa, Token Listrik, Tagihan, dan lebih banyak lagi. Optimal untuk Tablet & Mobile.</p>
+        <div class="hero-cta">
+          <a href="#produk" class="btn btn-primary btn-lg">Mulai Belanja</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+      <div class="container features-grid" id="features-grid">
+        <!-- filled by JS -->
+      </div>
+    </section>
+
+    <!-- Products -->
+    <section id="produk" class="products">
+      <div class="container">
+        <h2>Produk PPOB</h2>
+        <div class="category-tabs">
+          <button class="tab active" data-cat="all">Semua</button>
+          <button class="tab" data-cat="prabayar">Prabayar</button>
+          <button class="tab" data-cat="pascabayar">Pascabayar</button>
+        </div>
+        <div class="products-grid" id="products-grid">
+          <!-- filled by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq">
+      <div class="container">
+        <h2>Pertanyaan Umum (FAQ)</h2>
+        <div class="faq-list" id="faq-list">
+          <!-- filled by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact / Footer info -->
+    <section id="kontak" class="contact">
+      <div class="container">
+        <h2>Kontak & Informasi</h2>
+        <p>Butuh bantuan? Hubungi kami melalui email support@arekaturamanah.id</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p id="copyright">© PT AREK ATUR AMANAH @2026</p>
+      <p class="footer-links">
+        <a href="#" id="link-tnc">Syarat & Ketentuan</a> · 
+        <a href="/admin/">Admin Panel</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Modals -->
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modal-close">×</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <script src="/js/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(console.error);
+    }
+  </script>
+</body>
+</html>

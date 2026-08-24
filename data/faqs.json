@@ -1,0 +1,37 @@
+[
+  {
+    "id": "faq-001",
+    "question": "Apa itu PPOB?",
+    "answer": "PPOB (Payment Point Online Bank) adalah layanan pembayaran online untuk berbagai produk digital seperti pulsa, token listrik, tagihan, dan lainnya.",
+    "order": 1,
+    "active": true
+  },
+  {
+    "id": "faq-002",
+    "question": "Bagaimana cara melakukan pembelian?",
+    "answer": "Daftar/login terlebih dahulu, pilih produk, masukkan nomor tujuan, pilih metode pembayaran, dan selesaikan transaksi. Pastikan saldo atau pembayaran berhasil.",
+    "order": 2,
+    "active": true
+  },
+  {
+    "id": "faq-003",
+    "question": "Apakah ada biaya layanan?",
+    "answer": "Ya, biaya layanan dapat berupa persentase atau harga tetap tergantung produk. Biaya ditampilkan sebelum konfirmasi pembelian.",
+    "order": 3,
+    "active": true
+  },
+  {
+    "id": "faq-004",
+    "question": "Bagaimana jika transaksi gagal?",
+    "answer": "Jika transaksi gagal, dana akan dikembalikan otomatis ke rekening bank yang Anda berikan saat pendaftaran atau transaksi, sesuai kebijakan pengembalian dana.",
+    "order": 4,
+    "active": true
+  },
+  {
+    "id": "faq-005",
+    "question": "Apakah data saya aman?",
+    "answer": "Ya, kami menerapkan standar keamanan dan mematuhi regulasi perlindungan data pribadi di Indonesia (UU PDP).",
+    "order": 5,
+    "active": true
+  }
+]

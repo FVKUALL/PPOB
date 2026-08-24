@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - PPOB Mobile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .admin-layout { display: flex; min-height: 100vh; }
+    .sidebar {
+      width: 240px;
+      background: #212529;
+      color: #fff;
+      padding: 20px 0;
+      flex-shrink: 0;
+    }
+    .sidebar h2 { padding: 0 20px 20px; font-size: 1.1rem; border-bottom: 1px solid #333; }
+    .sidebar a {
+      display: block;
+      padding: 12px 20px;
+      color: #adb5bd;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .sidebar a:hover, .sidebar a.active { background: #343a40; color: #fff; }
+    .admin-main { flex: 1; padding: 24px; overflow-x: auto; }
+    .admin-main h1 { font-size: 1.5rem; margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #dee2e6; font-size: 0.9rem; }
+    th { background: #f8f9fa; font-weight: 600; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; }
+    .badge-success { background: #d1e7dd; color: #0f5132; }
+    .badge-danger { background: #f8d7da; color: #842029; }
+    .badge-warning { background: #fff3cd; color: #664d03; }
+    .login-box {
+      max-width: 360px;
+      margin: 80px auto;
+      background: #fff;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .section { display: none; }
+    .section.active { display: block; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 768px) {
+      .admin-layout { flex-direction: column; }
+      .sidebar { width: 100%; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="login-screen">
+    <div class="login-box">
+      <h2 style="margin-bottom:20px;text-align:center">Admin Login</h2>
+      <form id="admin-login-form">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" name="username" required value="admin">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" name="password" required value="admin123">
+        </div>
+        <div id="login-err"></div>
+        <button type="submit" class="btn btn-primary btn-block">Masuk</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="admin-app" class="admin-layout hidden">
+    <aside class="sidebar">
+      <h2>PPOB Admin</h2>
+      <a href="#" data-section="dashboard" class="active">Dashboard</a>
+      <a href="#" data-section="products">Produk</a>
+      <a href="#" data-section="faqs">FAQ</a>
+      <a href="#" data-section="settings">API & Settings</a>
+      <a href="#" data-section="fees">Biaya Layanan</a>
+      <a href="#" data-section="cms">CMS & SEO</a>
+      <a href="#" data-section="tnc">T&C / Agreement</a>
+      <a href="#" data-section="transactions">Transaksi</a>
+      <a href="#" data-section="reports">Laporan Penjualan</a>
+      <a href="#" data-section="users">Pengguna</a>
+      <a href="/" style="margin-top:20px;color:#0d6efd">← Kembali ke Site</a>
+      <a href="#" id="admin-logout">Logout</a>
+    </aside>
+    <main class="admin-main">
+      <!-- Dashboard -->
+      <section id="sec-dashboard" class="section active">
+        <h1>Dashboard</h1>
+        <div class="features-grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
+          <div class="feature-card"><h3 id="stat-products">-</h3><p>Produk</p></div>
+          <div class="feature-card"><h3 id="stat-users">-</h3><p>Pengguna</p></div>
+          <div class="feature-card"><h3 id="stat-tx">-</h3><p>Transaksi</p></div>
+          <div class="feature-card"><h3 id="stat-faqs">-</h3><p>FAQ</p></div>
+        </div>
+        <p style="margin-top:24px;color:#6c757d">Sistem menggunakan JSON File Storage. Integrasi API bersifat simulasi (sandbox). Ganti kredensial di menu Settings untuk production.</p>
+      </section>
+
+      <!-- Products -->
+      <section id="sec-products" class="section">
+        <h1>Kelola Produk</h1>
+        <button class="btn btn-primary" id="btn-add-product" style="margin-bottom:16px">+ Tambah Produk</button>
+        <div id="products-table"></div>
+      </section>
+
+      <!-- FAQs -->
+      <section id="sec-faqs" class="section">
+        <h1>Kelola FAQ</h1>
+        <button class="btn btn-primary" id="btn-add-faq" style="margin-bottom:16px">+ Tambah FAQ</button>
+        <div id="faqs-table"></div>
+      </section>
+
+      <!-- Settings / API -->
+      <section id="sec-settings" class="section">
+        <h1>OPEN API Settings</h1>
+        <p style="margin-bottom:16px;color:#6c757d">Prioritas switching: urutan di array. Aktifkan provider yang ingin digunakan.</p>
+        <form id="form-settings">
+          <h3>PPOB Providers</h3>
+          <div class="form-group">
+            <label>Priority (comma separated: digiflazz,iak,raja-biller)</label>
+            <input type="text" name="ppob_priority" id="ppob_priority">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Digiflazz Username</label>
+              <input type="text" name="digiflazz_user" id="digiflazz_user">
+            </div>
+            <div class="form-group">
+              <label>Digiflazz API Key</label>
+              <input type="text" name="digiflazz_key" id="digiflazz_key">
+            </div>
+          </div>
+          <div class="form-group">
+            <label><input type="checkbox" id="digiflazz_active"> Aktifkan Digiflazz (Prioritas)</label>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>IAK Username</label>
+              <input type="text" name="iak_user" id="iak_user">
+            </div>
+            <div class="form-group">
+              <label>IAK API Key</label>
+              <input type="text" name="iak_key" id="iak_key">
+            </div>
+          </div>
+          <div class="form-group">
+            <label><input type="checkbox" id="iak_active"> Aktifkan IAK</label>
+          </div>
+          <hr style="margin:20px 0">
+          <h3>Payment Gateways</h3>
+          <div class="form-group">
+            <label>Priority (bdpay,midtrans,doku,xendit)</label>
+            <input type="text" name="pay_priority" id="pay_priority">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>bdPay Merchant Code</label>
+              <input type="text" id="bdpay_merchant">
+            </div>
+            <div class="form-group">
+              <label>bdPay API Key</label>
+              <input type="text" id="bdpay_key">
+            </div>
+          </div>
+          <div class="form-group">
+            <label><input type="checkbox" id="bdpay_active"> Aktifkan bdPay (Prioritas)</label>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Midtrans Server Key</label>
+              <input type="text" id="midtrans_server">
+            </div>
+            <div class="form-group">
+              <label>Midtrans Client Key</label>
+              <input type="text" id="midtrans_client">
+            </div>
+          </div>
+          <div class="form-group">
+            <label><input type="checkbox" id="midtrans_active"> Aktifkan Midtrans</label>
+          </div>
+          <button type="submit" class="btn btn-primary" style="margin-top:16px">Simpan Settings</button>
+          <div id="settings-msg"></div>
+        </form>
+      </section>
+
+      <!-- Fees -->
+      <section id="sec-fees" class="section">
+        <h1>Biaya Layanan</h1>
+        <form id="form-fees">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Global Persentase (%)</label>
+              <input type="number" id="fee_percent" step="0.01" min="0">
+            </div>
+            <div class="form-group">
+              <label>Global Fixed (Rp)</label>
+              <input type="number" id="fee_fixed" min="0">
+            </div>
+          </div>
+          <p style="color:#6c757d;font-size:0.9rem">Biaya per produk dapat diatur saat edit produk (atau via JSON). Global diterapkan jika tidak ada override.</p>
+          <button type="submit" class="btn btn-primary">Simpan Biaya</button>
+          <div id="fees-msg"></div>
+        </form>
+      </section>
+
+      <!-- CMS -->
+      <section id="sec-cms" class="section">
+        <h1>CMS & SEO</h1>
+        <form id="form-cms">
+          <h3>Site Info</h3>
+          <div class="form-group">
+            <label>Nama Situs</label>
+            <input type="text" id="site_name">
+          </div>
+          <div class="form-group">
+            <label>Copyright</label>
+            <input type="text" id="site_copyright">
+          </div>
+          <h3>SEO</h3>
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" id="seo_title">
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="seo_desc" rows="2"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Keywords</label>
+            <input type="text" id="seo_keywords">
+          </div>
+          <h3>Homepage Hero</h3>
+          <div class="form-group">
+            <label>Hero Title</label>
+            <input type="text" id="hero_title">
+          </div>
+          <div class="form-group">
+            <label>Hero Subtitle</label>
+            <input type="text" id="hero_subtitle">
+          </div>
+          <button type="submit" class="btn btn-primary">Simpan CMS</button>
+          <div id="cms-msg"></div>
+        </form>
+      </section>
+
+      <!-- T&C -->
+      <section id="sec-tnc" class="section">
+        <h1>Syarat & Ketentuan / Agreement</h1>
+        <p style="margin-bottom:12px;color:#6c757d">Teks sesuai hukum Indonesia (UU ITE, UU PDP, Perlindungan Konsumen, regulasi BI). Edit sesuai kebutuhan legal.</p>
+        <form id="form-tnc">
+          <div class="form-group">
+            <label>T&C Saat Pendaftaran</label>
+            <textarea id="tnc_reg" rows="6"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Agreement Saat Pembelian</label>
+            <textarea id="tnc_purchase" rows="6"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Simpan T&C</button>
+          <div id="tnc-msg"></div>
+        </form>
+      </section>
+
+      <!-- Transactions -->
+      <section id="sec-transactions" class="section">
+        <h1>Transaksi</h1>
+        <div id="tx-table"></div>
+      </section>
+
+      <!-- Reports -->
+      <section id="sec-reports" class="section">
+        <h1>Laporan Penjualan</h1>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;align-items:end">
+          <div class="form-group" style="margin:0"><label>Dari</label><input type="date" id="report-from"></div>
+          <div class="form-group" style="margin:0"><label>Sampai</label><input type="date" id="report-to"></div>
+          <div class="form-group" style="margin:0"><label>Group By</label>
+            <select id="report-group"><option value="day">Hari</option><option value="month">Bulan</option><option value="product">Produk</option><option value="provider">Provider</option></select>
+          </div>
+          <button class="btn btn-primary" id="btn-load-report">Tampilkan</button>
+        </div>
+        <div id="report-summary" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px"></div>
+        <div id="report-table"></div>
+      </section>
+
+      <!-- Users -->
+      <section id="sec-users" class="section">
+        <h1>Pengguna</h1>
+        <div id="users-table"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modal-close">×</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

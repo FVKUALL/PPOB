@@ -1,0 +1,100 @@
+{
+  "site": {
+    "name": "PPOB Mobile Site",
+    "tagline": "Pembayaran Digital Mudah & Aman",
+    "copyright": "PT AREK ATUR AMANAH @2026",
+    "logo_url": "/assets/logo.png",
+    "primary_color": "#0d6efd",
+    "secondary_color": "#198754"
+  },
+  "seo": {
+    "title": "PPOB Mobile - Pembayaran Pulsa, Token, Tagihan Online",
+    "description": "Platform PPOB terpercaya untuk pembelian pulsa, paket data, token listrik, dan pembayaran tagihan. Mudah, cepat, dan aman.",
+    "keywords": "ppob, pulsa, token listrik, tagihan, pembayaran online, digiflazz",
+    "og_image": "/assets/og-image.jpg",
+    "canonical": "https://example.com"
+  },
+  "api_ppob": {
+    "priority": [
+      "digiflazz",
+      "iak",
+      "raja-biller"
+    ],
+    "digiflazz": {
+      "active": true,
+      "username": "",
+      "api_key": "",
+      "base_url": "https://api.digiflazz.com/v1",
+      "mode": "sandbox"
+    },
+    "iak": {
+      "active": true,
+      "username": "",
+      "api_key": "",
+      "base_url_prepaid": "https://prepaid.iak.dev",
+      "base_url_postpaid": "https://postpaid.iak.dev",
+      "mode": "sandbox"
+    },
+    "raja_biller": {
+      "active": false,
+      "username": "",
+      "api_key": "",
+      "base_url": "",
+      "mode": "sandbox"
+    }
+  },
+  "api_payment": {
+    "priority": [
+      "bdpay",
+      "midtrans",
+      "doku",
+      "xendit"
+    ],
+    "bdpay": {
+      "active": true,
+      "merchant_code": "",
+      "api_key": "",
+      "base_url": "https://dev-openapi.bdpay.co.id",
+      "mode": "sandbox"
+    },
+    "midtrans": {
+      "active": false,
+      "server_key": "",
+      "client_key": "",
+      "base_url": "https://api.sandbox.midtrans.com",
+      "mode": "sandbox"
+    },
+    "doku": {
+      "active": false,
+      "client_id": "",
+      "shared_key": "",
+      "base_url": "",
+      "mode": "sandbox"
+    },
+    "xendit": {
+      "active": false,
+      "secret_key": "",
+      "callback_token": "",
+      "base_url": "https://api.xendit.co",
+      "mode": "sandbox"
+    }
+  },
+  "fees": {
+    "global_percent": 0,
+    "global_fixed": 0,
+    "per_product": {}
+  },
+  "tnc": {
+    "registration": "Dengan mendaftar, Anda menyetujui Syarat dan Ketentuan yang berlaku sesuai hukum Republik Indonesia, termasuk UU ITE, UU PDP, dan peraturan Bank Indonesia terkait layanan pembayaran. Data pribadi Anda akan dilindungi. Transaksi bersifat final setelah berhasil. PT AREK ATUR AMANAH berhak menolak transaksi mencurigakan.",
+    "purchase": "Dengan melakukan pembelian, Anda menyetujui Agreement ini: 1. Memastikan data nomor tujuan benar. 2. Membayar sesuai nominal yang tertera termasuk biaya layanan. 3. Pengembalian dana hanya jika transaksi gagal dari sisi provider, ke rekening yang terdaftar. 4. Tidak ada refund untuk kesalahan input pengguna. Sesuai KUHP, UU Perlindungan Konsumen, dan regulasi terkait."
+  },
+  "admin": {
+    "username": "admin",
+    "password": "admin123"
+  },
+  "google": {
+    "client_id": "",
+    "enabled": true,
+    "note": "Isi Google OAuth 2.0 Client ID dari Google Cloud Console. Kosongkan = mode demo (simulasi Google login)."
+  }
+}

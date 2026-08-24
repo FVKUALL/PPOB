@@ -1,0 +1,23 @@
+{
+  "pages": {
+    "home": {
+      "hero_title": "Pembayaran Digital Mudah & Aman",
+      "hero_subtitle": "Pulsa, Token Listrik, Tagihan, dan lebih banyak lagi. Cocok untuk tablet & mobile.",
+      "features": [
+        {"icon": "⚡", "title": "Cepat", "desc": "Proses instan via provider terpercaya"},
+        {"icon": "🔒", "title": "Aman", "desc": "Keamanan berlapis & refund otomatis"},
+        {"icon": "📱", "title": "Mobile First", "desc": "Desain optimal untuk tablet & smartphone"}
+      ]
+    },
+    "about": {
+      "title": "Tentang Kami",
+      "content": "PT AREK ATUR AMANAH menyediakan layanan PPOB modern dengan integrasi multi-provider dan payment gateway terkemuka di Indonesia."
+    }
+  },
+  "menu": [
+    {"label": "Beranda", "url": "/", "order": 1},
+    {"label": "Produk", "url": "/#produk", "order": 2},
+    {"label": "FAQ", "url": "/#faq", "order": 3},
+    {"label": "Kontak", "url": "/#kontak", "order": 4}
+  ]
+}
